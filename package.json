@@ -1,6 +1,6 @@
 {
   "name": "clicked",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Javascript: create click event for both mouse and touch",
   "main": "clicked.js",
   "scripts": {
