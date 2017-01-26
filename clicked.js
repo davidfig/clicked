@@ -61,6 +61,7 @@ export default function clicked(element, callback, options)
     {
         if (down)
         {
+            e.stopPropagation();
             callback(e);
         }
     }
