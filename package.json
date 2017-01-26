@@ -1,0 +1,25 @@
+{
+  "name": "clicked",
+  "version": "1.0.0",
+  "description": "Javascript: create click event for both mouse and touch",
+  "main": "clicked.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davidfig/clicked.git"
+  },
+  "keywords": [
+    "javascript",
+    "mouse",
+    "touch",
+    "click"
+  ],
+  "author": "David Figatner (YOPEY YOPEY LLC)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/davidfig/clicked/issues"
+  },
+  "homepage": "https://github.com/davidfig/clicked#readme"
+}

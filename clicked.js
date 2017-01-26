@@ -1,4 +1,5 @@
 /**
+ * Javascript: create click event for both mouse and touch
  * @example
  *
  *  import clicked from 'clicked';
@@ -40,20 +41,28 @@ export default function clicked(element, callback, options)
     {
         if (!down || e.touches.length !== 1)
         {
-            touchend();
+            touchcancel();
             return;
         }
         const x = e.changedTouches[0].screenX;
         const y = e.changedTouches[0].screenY;
         if (pastThreshhold(x, y))
         {
-            touchend();
+            touchcancel();
         }
     }
 
-    function touchend()
+    function touchcancel()
     {
         down = false;
+    }
+
+    function touchend(e)
+    {
+        if (down)
+        {
+            callback(e);
+        }
     }
 
     options = options || {};
@@ -63,5 +72,6 @@ export default function clicked(element, callback, options)
     element.addEventListener('click', callback);
     element.addEventListener('touchstart', touchstart);
     element.addEventListener('touchmove', touchmove);
-    element.addEventListener('touchend touchcancel', touchend);
+    element.addEventListener('touchcancel', touchcancel);
+    element.addEventListener('touchend', touchend);
 }
