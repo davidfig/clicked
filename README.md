@@ -21,7 +21,7 @@ To create a simple way to handle mouse and touch click events without any extern
 
 ### export default function clicked(element, handler, options)
 
-- {htmlElement} element to attach the mouse and touch handlers
+- {htmlElement} element to listen for mouse and touch events
 - {function} handler to call after a click
 - {object} [options]
 - {number} [options.threshhold] maximum number of pixels that the touch may move before cancelling click
