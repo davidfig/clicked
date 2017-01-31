@@ -2,14 +2,15 @@
  * Javascript: create click event for both mouse and touch
  * @example
  *
- *  import clicked from 'clicked';
+ * import clicked from 'clicked';
+ * // or var clicked = require('clicked');
  *
  *  function handleClick()
  *  {
  *      console.log('I was clicked.');
  *  }
  *
- *  const div = document.getElementById('clickme');
+ *  var div = document.getElementById('clickme');
  *  clicked(div, handleClick, {thresshold: 15});
  *
  */
@@ -20,7 +21,7 @@
  * @param {object} [options]
  * @param {number} [options.thresshold=10] if touch moves threshhold-pixels then the touch-click is cancelled
  */
-export default function clicked(element, callback, options)
+function clicked(element, callback, options)
 {
     function touchstart(e)
     {
@@ -44,8 +45,8 @@ export default function clicked(element, callback, options)
             touchcancel();
             return;
         }
-        const x = e.changedTouches[0].screenX;
-        const y = e.changedTouches[0].screenY;
+        var x = e.changedTouches[0].screenX;
+        var y = e.changedTouches[0].screenY;
         if (pastThreshhold(x, y))
         {
             touchcancel();
@@ -67,8 +68,8 @@ export default function clicked(element, callback, options)
     }
 
     options = options || {};
-    let down, lastX, lastY;
-    let threshhold = options.thresshold || 10;
+    var down, lastX, lastY;
+    var threshhold = options.thresshold || 10;
 
     element.addEventListener('click', callback);
     element.addEventListener('touchstart', touchstart);
@@ -76,3 +77,5 @@ export default function clicked(element, callback, options)
     element.addEventListener('touchcancel', touchcancel);
     element.addEventListener('touchend', touchend);
 }
+
+module.exports = clicked;

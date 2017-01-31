@@ -7,19 +7,19 @@ To create a simple way to handle mouse and touch click events without any extern
 
 ## example
 
-    import clicked from 'clicked';
+    var clicked = require('clicked')
 
     function handleClick()
     {
         console.log('I was clicked.');
     }
 
-    const div = document.getElementById('clickme');
+    var div = document.getElementById('clickme');
     clicked(div, handleClick, {thresshold: 15});
 
 ## API
 
-### export default function clicked(element, handler, options)
+### function clicked(element, handler, options)
 
 - {htmlElement} element to listen for mouse and touch events
 - {function} handler to call after a click
