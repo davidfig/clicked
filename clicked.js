@@ -17,9 +17,10 @@
 
 /**
  * @param {HTMLElement} element
- * @param {function} callback called after click
+ * @param {function} callback called after click: callback(event, options.args)
  * @param {object} [options]
  * @param {number} [options.thresshold=10] if touch moves threshhold-pixels then the touch-click is cancelled
+ * @param {*} [options.args] arguments for callback function
  */
 function clicked(element, callback, options)
 {
@@ -63,7 +64,7 @@ function clicked(element, callback, options)
         if (down)
         {
             e.preventDefault();
-            callback(e);
+            callback(e, options.args);
         }
     }
 
