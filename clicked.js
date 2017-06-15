@@ -68,11 +68,16 @@ function clicked(element, callback, options)
         }
     }
 
+    function mouseclick(e)
+    {
+        callback(e, options.args);
+    }
+
     options = options || {};
     var down, lastX, lastY;
     var threshhold = options.thresshold || 10;
 
-    element.addEventListener('click', callback);
+    element.addEventListener('click', mouseclick);
     element.addEventListener('touchstart', touchstart);
     element.addEventListener('touchmove', touchmove);
     element.addEventListener('touchcancel', touchcancel);
