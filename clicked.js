@@ -78,8 +78,8 @@ function clicked(element, callback, options)
     var threshhold = options.thresshold || 10;
 
     element.addEventListener('click', mouseclick);
-    element.addEventListener('touchstart', touchstart);
-    element.addEventListener('touchmove', touchmove);
+    element.addEventListener('touchstart', touchstart, { passive: true });
+    element.addEventListener('touchmove', touchmove, { passive: true });
     element.addEventListener('touchcancel', touchcancel);
     element.addEventListener('touchend', touchend);
 }
