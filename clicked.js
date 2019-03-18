@@ -44,11 +44,11 @@ class Clicked
             touchcancel: (e) => this.touchcancel(e),
             touchend: (e) => this.touchend(e)
         }
-        element.addEventListener('click', this.events.mouseclick, { capture: options.capture })
-        element.addEventListener('touchstart', this.events.touchstart, { passive: true, capture: options.capture })
-        element.addEventListener('touchmove', this.events.touchmove, { passive: true, capture: options.capture })
-        element.addEventListener('touchcancel', this.events.touchcancel, { capture: options.capture})
-        element.addEventListener('touchend', this.events.touchend, { capture: options.capture })
+        element.addEventListener('click', this.events.mouseclick, { capture: this.options.capture })
+        element.addEventListener('touchstart', this.events.touchstart, { passive: true, capture: this.options.capture })
+        element.addEventListener('touchmove', this.events.touchmove, { passive: true, capture: this.options.capture })
+        element.addEventListener('touchcancel', this.events.touchcancel, { capture: this.options.capture})
+        element.addEventListener('touchend', this.events.touchend, { capture: this.options.capture })
         this.element = element
         this.callback = callback
     }
