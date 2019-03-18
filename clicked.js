@@ -22,6 +22,7 @@
  * @param {function} callback called after click: callback(event, options.args)
  * @param {object} [options]
  * @param {number} [options.thresshold=10] if touch moves threshhold-pixels then the touch-click is cancelled
+ * @param {boolean} [options.capture]  events will be dispatched to this registered listener before being dispatched to any EventTarget beneath it in the DOM tree
  * @param {*} [options.args] arguments for callback function
  * @returns {Clicked}
  */
@@ -43,11 +44,11 @@ class Clicked
             touchcancel: (e) => this.touchcancel(e),
             touchend: (e) => this.touchend(e)
         }
-        element.addEventListener('click', this.events.mouseclick)
-        element.addEventListener('touchstart', this.events.touchstart, { passive: true })
-        element.addEventListener('touchmove', this.events.touchmove, { passive: true })
-        element.addEventListener('touchcancel', this.events.touchcancel)
-        element.addEventListener('touchend', this.events.touchend)
+        element.addEventListener('click', this.events.mouseclick, { capture: options.capture })
+        element.addEventListener('touchstart', this.events.touchstart, { passive: true, capture: options.capture })
+        element.addEventListener('touchmove', this.events.touchmove, { passive: true, capture: options.capture })
+        element.addEventListener('touchcancel', this.events.touchcancel, { capture: options.capture})
+        element.addEventListener('touchend', this.events.touchend, { capture: options.capture })
         this.element = element
         this.callback = callback
     }

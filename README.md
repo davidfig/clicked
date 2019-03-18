@@ -38,7 +38,6 @@ To create a simple way to handle mouse and touch click events without any extern
  *
  */
 
-
 /**
  * @param {HTMLElement} element
  * @param {function} callback called after click: callback(event, options.args)
@@ -49,12 +48,12 @@ To create a simple way to handle mouse and touch click events without any extern
  */
 function clicked(element, callback, options)
 
-    /**
-     * removes event listeners added by Clicked
-     */
-    destroy()
+/**
+ * removes event listeners added by Clicked
+ */
+Clicked.destroy()
 
 ```
 ## license  
 MIT License  
-(c) 2018 [YOPEY YOPEY LLC](https://yopeyopey.com/) by [David Figatner](https://twitter.com/yopey_yopey/)
+(c) 2019 [YOPEY YOPEY LLC](https://yopeyopey.com/) by [David Figatner](https://twitter.com/yopey_yopey/)
