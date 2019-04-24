@@ -10,15 +10,20 @@
  * }
  *
  * const div = document.getElementById('clickme')
- * const c = clicked(div, handleClick, {thresshold: 15})
+ * const c = clicked(div, handleClick, { thresshold: 15 })
+ *
+ * // using built-in querySelector
+ * const c2 = clicked('#clickme', handleClick)
  *
  * // change callback
  * c.callback = () => console.log('different clicker')
  *
+ * // destroy
+ * c.destroy()
  */
 
 /**
- * @param {HTMLElement} element
+ * @param {HTMLElement|string} element or querySelector entry (e.g., #id-name or .class-name)
  * @param {function} callback called after click: callback(event, options.args)
  * @param {object} [options]
  * @param {number} [options.thresshold=10] if touch moves threshhold-pixels then the touch-click is cancelled
@@ -35,6 +40,15 @@ class Clicked
 {
     constructor(element, callback, options)
     {
+        if (typeof element === 'string')
+        {
+            element = document.querySelector(element)
+            if (!element)
+            {
+                console.warn(`Unknown element: document.querySelector(${element}) in clicked()`)
+                return
+            }
+        }
         this.options = options || {}
         this.threshhold = this.options.thresshold || 10
         this.events = {

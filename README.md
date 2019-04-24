@@ -6,54 +6,47 @@ Create click event for both mouse and touch
 To create a simple way to handle mouse and touch click events without any external dependencies.
 
 ## example
+```js
+var clicked = require('clicked')
 
-    var clicked = require('clicked')
+function handleClick()
+{
+    console.log('I was clicked.');
+}
 
-    function handleClick()
-    {
-        console.log('I was clicked.');
-    }
+const div = document.getElementById('clickme')
+const c = clicked(div, handleClick, { thresshold: 15 })
 
-    var div = document.getElementById('clickme');
-    clicked(div, handleClick, {thresshold: 15});
+// using built-in querySelector
+const c2 = clicked('#clickme', handleClick)
+
+// change callback
+c2.callback = () => console.log('different clicker')
+
+// destroy
+c.destroy()
+```
 
 ## API
-```js
-/**
- * Javascript: create click event for both mouse and touch
- * @example
- *
- * const clicked = require('clicked')
- *
- * function handleClick()
- * {
- *    console.log('I was clicked.')
- * }
- *
- * const div = document.getElementById('clickme')
- * const c = clicked(div, handleClick, {thresshold: 15})
- *
- * // change callback
- * c.callback = () => console.log('different clicker')
- *
- */
 
-/**
- * @param {HTMLElement} element
- * @param {function} callback called after click: callback(event, options.args)
- * @param {object} [options]
- * @param {number} [options.thresshold=10] if touch moves threshhold-pixels then the touch-click is cancelled
- * @param {*} [options.args] arguments for callback function
- * @returns {Clicked}
- */
-function clicked(element, callback, options)
+### clicked(element, callback, options)
+creates Clicked object for element
 
-/**
- * removes event listeners added by Clicked
- */
-Clicked.destroy()
+|name|type|description
+|---|---|---|
+|element|HTMLElement or string|element or querySelector entry (e.g., #id-name or .class-name)|
+|callback|function|callback called after clicked: callback(event: InputEvent, args: Object)
+|options|object|optional options|
+|threshold|number|default=10; cancels click event when touch moves more than thresshold
+|args|*|arguments for callback function
+returns Clicked
 
-```
+### Clicked.destroy()
+removes event listeners on element
+
+### Clicked.callback : function
+use to change callback
+
 ## license  
 MIT License  
 (c) 2019 [YOPEY YOPEY LLC](https://yopeyopey.com/) by [David Figatner](https://twitter.com/yopey_yopey/)
