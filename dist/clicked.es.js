@@ -43,7 +43,7 @@ const defaultOptions = {
     longClicked: false,
     longClickedTime: 500,
     capture: false
-}
+};
 
 /**
  * @param {HTMLElement|string} element or querySelector entry (e.g., #id-name or .class-name)
@@ -57,7 +57,7 @@ const defaultOptions = {
  * @param {boolean} [options.capture]  events will be dispatched to this registered listener before being dispatched to any EventTarget beneath it in the DOM tree
  * @returns {Clicked}
  */
-export function clicked(element, callback, options)
+function clicked(element, callback, options)
 {
     return new Clicked(element, callback, options)
 }
@@ -68,14 +68,14 @@ class Clicked
     {
         if (typeof element === 'string')
         {
-            element = document.querySelector(element)
+            element = document.querySelector(element);
             if (!element)
             {
-                console.warn(`Unknown element: document.querySelector(${element}) in clicked()`)
+                console.warn(`Unknown element: document.querySelector(${element}) in clicked()`);
                 return
             }
         }
-        this.options = Object.assign({}, defaultOptions, options)
+        this.options = Object.assign({}, defaultOptions, options);
         this.events = {
             mousedown: (e) => this.mousedown(e),
             mouseup: (e) => this.mouseup(e),
@@ -84,16 +84,16 @@ class Clicked
             touchmove: (e) => this.touchmove(e),
             touchcancel: (e) => this.cancel(e),
             touchend: (e) => this.touchend(e)
-        }
-        element.addEventListener('mousedown', this.events.mousedown, { capture: this.options.capture })
-        element.addEventListener('mouseup', this.events.mouseup, { capture: this.options.capture })
-        element.addEventListener('mousemove', this.events.mousemove, { capture: this.options.capture })
-        element.addEventListener('touchstart', this.events.touchstart, { passive: true, capture: this.options.capture })
-        element.addEventListener('touchmove', this.events.touchmove, { passive: true, capture: this.options.capture })
-        element.addEventListener('touchcancel', this.events.touchcancel, { capture: this.options.capture})
-        element.addEventListener('touchend', this.events.touchend, { capture: this.options.capture })
-        this.element = element
-        this.callback = callback
+        };
+        element.addEventListener('mousedown', this.events.mousedown, { capture: this.options.capture });
+        element.addEventListener('mouseup', this.events.mouseup, { capture: this.options.capture });
+        element.addEventListener('mousemove', this.events.mousemove, { capture: this.options.capture });
+        element.addEventListener('touchstart', this.events.touchstart, { passive: true, capture: this.options.capture });
+        element.addEventListener('touchmove', this.events.touchmove, { passive: true, capture: this.options.capture });
+        element.addEventListener('touchcancel', this.events.touchcancel, { capture: this.options.capture});
+        element.addEventListener('touchend', this.events.touchend, { capture: this.options.capture });
+        this.element = element;
+        this.callback = callback;
     }
 
     /**
@@ -101,26 +101,26 @@ class Clicked
      */
     destroy()
     {
-        this.element.removeEventListener('mousedown', this.events.mousedown)
-        this.element.removeEventListener('mouseup', this.events.mouseup)
-        this.element.removeEventListener('mousemove', this.events.mousemove)
-        this.element.removeEventListener('touchstart', this.events.touchstart, { passive: true })
-        this.element.removeEventListener('touchmove', this.events.touchmove, { passive: true })
-        this.element.removeEventListener('touchcancel', this.events.touchcancel)
-        this.element.removeEventListener('touchend', this.events.touchend)
+        this.element.removeEventListener('mousedown', this.events.mousedown);
+        this.element.removeEventListener('mouseup', this.events.mouseup);
+        this.element.removeEventListener('mousemove', this.events.mousemove);
+        this.element.removeEventListener('touchstart', this.events.touchstart, { passive: true });
+        this.element.removeEventListener('touchmove', this.events.touchmove, { passive: true });
+        this.element.removeEventListener('touchcancel', this.events.touchcancel);
+        this.element.removeEventListener('touchend', this.events.touchend);
     }
 
     touchstart(e)
     {
         if (this.down === true)
         {
-            this.cancel()
+            this.cancel();
         }
         else
         {
             if (e.touches.length === 1)
             {
-                this.handleDown(e.changedTouches[0].screenX, e.changedTouches[0].screenY)
+                this.handleDown(e.changedTouches[0].screenX, e.changedTouches[0].screenY);
             }
         }
     }
@@ -136,15 +136,15 @@ class Clicked
         {
             if (e.touches.length !== 1)
             {
-                this.cancel()
+                this.cancel();
             }
             else
             {
-                const x = e.changedTouches[0].screenX
-                const y = e.changedTouches[0].screenY
+                const x = e.changedTouches[0].screenX;
+                const y = e.changedTouches[0].screenY;
                 if (this.pastThreshhold(x, y))
                 {
-                    this.cancel()
+                    this.cancel();
                 }
             }
         }
@@ -153,16 +153,16 @@ class Clicked
     /** cancel current event */
     cancel()
     {
-        this.down = false
+        this.down = false;
         if (this.doubleClickedTimeout)
         {
-            clearTimeout(this.doubleClickedTimeout)
-            this.doubleClickedTimeout = null
+            clearTimeout(this.doubleClickedTimeout);
+            this.doubleClickedTimeout = null;
         }
         if (this.longClickedTimeout)
         {
-            clearTimeout(this.longClickedTimeout)
-            this.longClickedTimeout = null
+            clearTimeout(this.longClickedTimeout);
+            this.longClickedTimeout = null;
         }
     }
 
@@ -170,8 +170,8 @@ class Clicked
     {
         if (this.down)
         {
-            e.preventDefault()
-            this.handleClicks(e, e.pointerId)
+            e.preventDefault();
+            this.handleClicks(e, e.pointerId);
         }
     }
 
@@ -179,18 +179,18 @@ class Clicked
     {
         if (this.options.doubleClicked)
         {
-            this.doubleClickedTimeout = setTimeout(() => this.doubleClicked(e), this.options.doubleClickedTime)
+            this.doubleClickedTimeout = setTimeout(() => this.doubleClicked(e), this.options.doubleClickedTime);
         }
         else
         {
-            this.callback({ event: e, type: 'clicked' })
+            this.callback({ event: e, type: 'clicked' });
         }
         if (this.longClickedTimeout)
         {
-            clearTimeout(this.longClickedTimeout)
-            this.longClickedTimeout = null
+            clearTimeout(this.longClickedTimeout);
+            this.longClickedTimeout = null;
         }
-        this.down = false
+        this.down = false;
     }
 
     handleDown(e, x, y)
@@ -199,49 +199,49 @@ class Clicked
         {
             if (this.pastThreshhold(x, y))
             {
-                this.callback({ event: e, type: 'clicked' })
-                this.cancel()
+                this.callback({ event: e, type: 'clicked' });
+                this.cancel();
             }
             else
             {
-                this.callback({ event: e, type: 'double-clicked' })
-                this.cancel()
+                this.callback({ event: e, type: 'double-clicked' });
+                this.cancel();
             }
         }
         else
         {
-            this.lastX = x
-            this.lastY = y
-            this.down = true
+            this.lastX = x;
+            this.lastY = y;
+            this.down = true;
             if (this.options.longClicked)
             {
-                this.longClickedTimeout = setTimeout(() => this.longClicked(e), this.options.longClickedTime)
+                this.longClickedTimeout = setTimeout(() => this.longClicked(e), this.options.longClickedTime);
             }
         }
     }
 
     longClicked(e)
     {
-        this.longClikedTimeout = null
-        this.down = false
-        this.callback({ event: e, type: 'long-clicked' })
+        this.longClikedTimeout = null;
+        this.down = false;
+        this.callback({ event: e, type: 'long-clicked' });
     }
 
     doubleClicked(e)
     {
-        this.doubleClickedTimeout = null
-        this.callback({ event: e, type: 'clicked' })
+        this.doubleClickedTimeout = null;
+        this.callback({ event: e, type: 'clicked' });
     }
 
     mousedown(e)
     {
         if (this.down === true)
         {
-            this.down = false
+            this.down = false;
         }
         else
         {
-            this.handleDown(e, e.screenX, e.screenY)
+            this.handleDown(e, e.screenX, e.screenY);
         }
     }
 
@@ -249,11 +249,11 @@ class Clicked
     {
         if (this.down)
         {
-            const x = e.screenX
-            const y = e.screenY
+            const x = e.screenX;
+            const y = e.screenY;
             if (this.pastThreshhold(x, y))
             {
-                this.cancel()
+                this.cancel();
             }
         }
     }
@@ -262,8 +262,8 @@ class Clicked
     {
         if (this.down)
         {
-            e.preventDefault()
-            this.handleClicks(e)
+            e.preventDefault();
+            this.handleClicks(e);
         }
     }
 }
@@ -274,3 +274,6 @@ class Clicked
  * @param {UIEvent} event
  * @param {('clicked'|'double-clicked'|'long-clicked')} type
  */
+
+export { clicked };
+//# sourceMappingURL=clicked.es.js.map

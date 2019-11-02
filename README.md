@@ -1,51 +1,85 @@
 # clicked
-Create click event for both mouse and touch
+Javascript handler for clicks, double-clicks, and/or long-clicks that works for both mouse and touch
+
+## changes in version 3
+Version 3 introduces long clicks and double clicks. See the example below. Note the changed usage since the library is now compiled with rollup.
+
+## usage
+```import { clicked } from 'clicked'```
+
+or
+
+```const clicked = require('clicked').clicked```
 
 ## rationale
 
-To create a simple way to handle mouse and touch click events without any external dependencies.
+I wanted to create a vanilla javascript way to handle mouse and touch clicks, double-clicks, and long-clicks.
 
 ## example
 ```js
-var clicked = require('clicked')
+import { clicked } from 'clicked'
 
 function handleClick()
 {
-    console.log('I was clicked.');
+   console.log('I was clicked.')
 }
-
 const div = document.getElementById('clickme')
 const c = clicked(div, handleClick, { thresshold: 15 })
 
-// using built-in querySelector
-const c2 = clicked('#clickme', handleClick)
-
 // change callback
-c2.callback = () => console.log('different clicker')
+c.callback = () => console.log('different clicker')
 
 // destroy
 c.destroy()
+
+// using built-in querySelector
+clicked('#clickme', handleClick2)
+
+// support for all types of clicks
+function handleAllClicks(e) {
+    switch (e.type)
+    {
+        case 'clicked': ...
+        case 'double-clicked': ...
+        case 'long-clicked': ...
+    }
+    // view UIEvent that caused callback
+    console.log(e.event)
+}
+clicked('#clickme', handleAllClicks, { doubleClick: true, longClick: true })
 ```
 
 ## API
 
-### clicked(element, callback, options)
+### clicked(element, callback, options) : Clicked
 creates Clicked object for element
 
-|name|type|description
-|---|---|---|
-|element|HTMLElement or string|element or querySelector entry (e.g., #id-name or .class-name)|
-|callback|function|callback called after clicked: callback(event: InputEvent, args: Object)
-|options|object|optional options|
-|threshold|number|default=10; cancels click event when touch moves more than thresshold
-|args|*|arguments for callback function
-returns Clicked
+|name|type|default|description
+|---|---|---|---|
+|element|HTMLElement or string||element or querySelector entry (e.g., #id-name or .class-name)|
+|callback|ClickedCallback||callback called after clicked
+|options|object||optional options|
+|options.threshold|number|10|cancels click event when touch or mouse moves more than thresshold
+|options.doubleClick|boolean|false|enable watcher for double click
+|options.doubleClickTime]|number|500|wait time in millseconds for double click
+|options.longClick]|boolean|false|enable watcher for long click
+|options.longClickTime]|boolean|500|wait time for long click
+
+### Clicked
+returned by clicked(...)
 
 ### Clicked.destroy()
 removes event listeners on element
 
-### Clicked.callback : function
-use to change callback
+### Clicked.callback (function): ClickedCallback
+
+|name|type|description
+|---|---|---|
+|event|UIEvent|last UIEvent that triggered callback|
+|type|'clicked' or 'double-clicked' or 'long-clicked'|type of click|
+
+### Clicked.cancel()
+cancel any outstanding events
 
 ## license  
 MIT License  

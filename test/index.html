@@ -1,0 +1,56 @@
+<html><head>
+    <title>Test for clicked</title>
+    <style>
+        body
+        {
+            font-size:1.25rem;
+            margin:1rem
+        }
+        header
+        {
+            font-size:1.5rem;
+            text-align:center;
+            margin-bottom:1rem
+        }
+        .test
+        {
+            margin-bottom:2rem
+        }
+        .title
+        {
+            font-family:consolas monospace;
+            text-decoration:underline;
+            cursor:pointer;
+            user-select:none
+        }
+    </style>
+</head>
+<body>
+    <header>Test for <a href="https://github.com/davidfig/clicked">Clicked</a></header>
+    <div class="test">
+        <div class="title element-1">clicked(element, () => ...)</div>
+        <div class="response response-1">Not clicked</div>
+    </div>
+    <div class="test">
+        <div class="title element-2">clicked(element, () => ..., { doubleClicked: true})</div>
+        <div class="response response-2">Not clicked</div>
+    </div>
+    <div class="test">
+        <div class="title element-3">clicked(element, () => ..., { longClicked: true})</div>
+        <div class="response response-3">Not clicked</div>
+    </div>
+    <div class="test">
+        <div class="title element-4">clicked(element, () => ..., { doubleClicked: true, longClicked: true})</div>
+        <div class="response response-4">Not clicked</div>
+    </div>
+    <div class="test">
+        <div class="title element-5">clicked(element, () => ..., { doubleClicked: true, doubleClickedTime: 1000 })</div>
+        <div class="response response-5">Not clicked</div>
+    </div>
+    <div class="test">
+        <div class="title element-6">clicked(element, () => ..., { longClicked: true, longClickedTime: 1000 })</div>
+        <div class="response response-6">Not clicked</div>
+    </div>
+    <script src="/code.js"></script>
+</body>
+</html>
