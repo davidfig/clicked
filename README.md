@@ -81,6 +81,11 @@ removes event listeners on element
 ### Clicked.cancel()
 cancel any outstanding events
 
+## tests
+```yarn test```
+
+Open browser to https://localhost:1234/
+
 ## license  
 MIT License  
 (c) 2019 [YOPEY YOPEY LLC](https://yopeyopey.com/) by [David Figatner](https://twitter.com/yopey_yopey/)

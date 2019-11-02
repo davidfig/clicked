@@ -5,8 +5,8 @@
   "main": "dist/clicked.js",
   "module": "dist/clicked.es.js",
   "scripts": {
-    "test": "parcel test/index.html -o docs",
-    "build-test": "parcel build test/index.html -o docs",
+    "test": "parcel test/index.html --out-dir docs",
+    "build-test": "parcel build test/index.html --out-dir docs",
     "build": "rollup -c rollup.config.js",
     "prepublishOnly": "yarn build"
   },
