@@ -3,7 +3,7 @@
   "version": "3.0.0",
   "description": "Javascript handler for clicks, double-clicks, and/or long-clicks that works for both mouse and touch",
   "main": "dist/clicked.js",
-  "module": "dist/clicked.es.js",
+  "module": "clicked.js",
   "scripts": {
     "test": "parcel test/index.html --out-dir docs",
     "build-test": "parcel build test/index.html --out-dir docs",

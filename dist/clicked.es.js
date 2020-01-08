@@ -42,7 +42,8 @@ const defaultOptions = {
     doubleClickedTime: 300,
     longClicked: false,
     longClickedTime: 500,
-    capture: false
+    capture: false,
+    clickDown: false
 };
 
 /**
@@ -54,6 +55,7 @@ const defaultOptions = {
  * @param {number} [options.doubleClickedTime=500] wait time in millseconds for double click
  * @param {boolean} [options.longClicked] enable watcher for long click
  * @param {number} [options.longClickedTime=500] wait time for long click
+ * @param {boolean} [options.clickDown] enable watcher for click start
  * @param {boolean} [options.capture]  events will be dispatched to this registered listener before being dispatched to any EventTarget beneath it in the DOM tree
  * @returns {Clicked}
  */
@@ -217,6 +219,9 @@ class Clicked
             {
                 this.longClickedTimeout = setTimeout(() => this.longClicked(e), this.options.longClickedTime);
             }
+            if (this.options.clickDown) {
+                this.callback({ event: e, type: 'click-down' });
+            }
         }
     }
 
@@ -272,7 +277,7 @@ class Clicked
  * Callback for
  * @callback Clicked~ClickedCallback
  * @param {UIEvent} event
- * @param {('clicked'|'double-clicked'|'long-clicked')} type
+ * @param {('clicked'|'double-clicked'|'long-clicked'|'click-down')} type
  */
 
 export { clicked };

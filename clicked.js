@@ -38,11 +38,13 @@
 /** @type {object} */
 const defaultOptions = {
     thresshold: 10,
+    clicked: true,
     doubleClicked: false,
     doubleClickedTime: 300,
     longClicked: false,
     longClickedTime: 500,
-    capture: false
+    capture: false,
+    clickDown: false
 }
 
 /**
@@ -50,10 +52,12 @@ const defaultOptions = {
  * @param {ClickedCallback} callback called after a click, double click, or long click is registered
  * @param {object} [options]
  * @param {number} [options.thresshold=10] if touch moves threshhold-pixels then the touch-click is cancelled
+ * @param {boolean} [options.clicked=true] disable watcher for default clicked event
  * @param {boolean} [options.doubleClicked] enable watcher for double click
  * @param {number} [options.doubleClickedTime=500] wait time in millseconds for double click
  * @param {boolean} [options.longClicked] enable watcher for long click
  * @param {number} [options.longClickedTime=500] wait time for long click
+ * @param {boolean} [options.clickDown] enable watcher for click start
  * @param {boolean} [options.capture]  events will be dispatched to this registered listener before being dispatched to any EventTarget beneath it in the DOM tree
  * @returns {Clicked}
  */
@@ -181,7 +185,7 @@ class Clicked
         {
             this.doubleClickedTimeout = setTimeout(() => this.doubleClicked(e), this.options.doubleClickedTime)
         }
-        else
+        else if (this.options.clicked)
         {
             this.callback({ event: e, type: 'clicked' })
         }
@@ -199,7 +203,10 @@ class Clicked
         {
             if (this.pastThreshhold(x, y))
             {
-                this.callback({ event: e, type: 'clicked' })
+                if (this.options.clicked)
+                {
+                    this.callback({ event: e, type: 'clicked' })
+                }
                 this.cancel()
             }
             else
@@ -217,6 +224,9 @@ class Clicked
             {
                 this.longClickedTimeout = setTimeout(() => this.longClicked(e), this.options.longClickedTime)
             }
+            if (this.options.clickDown) {
+                this.callback({ event: e, type: 'click-down' })
+            }
         }
     }
 
@@ -230,7 +240,7 @@ class Clicked
     doubleClicked(e)
     {
         this.doubleClickedTimeout = null
-        this.callback({ event: e, type: 'clicked' })
+        this.callback({ event: e, type: 'double-clicked' })
     }
 
     mousedown(e)
@@ -272,5 +282,5 @@ class Clicked
  * Callback for
  * @callback Clicked~ClickedCallback
  * @param {UIEvent} event
- * @param {('clicked'|'double-clicked'|'long-clicked')} type
+ * @param {('clicked'|'double-clicked'|'long-clicked'|'click-down')} type
  */
