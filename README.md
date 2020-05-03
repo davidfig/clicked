@@ -24,7 +24,7 @@ function handleClick()
    console.log('I was clicked.')
 }
 const div = document.getElementById('clickme')
-const c = clicked(div, handleClick, { thresshold: 15 })
+const c = clicked(div, handleClick, { threshold: 15 })
 
 // change callback
 c.callback = () => console.log('different clicker')
@@ -59,7 +59,7 @@ creates Clicked object for element
 |element|HTMLElement or string||element or querySelector entry (e.g., #id-name or .class-name)|
 |callback|ClickedCallback||callback called after clicked
 |options|object||optional options|
-|options.threshold|number|10|cancels click event when touch or mouse moves more than thresshold
+|options.threshold|number|10|cancels click event when touch or mouse moves more than threshold
 |options.doubleClick|boolean|false|enable watcher for double click
 |options.doubleClickTime]|number|500|wait time in millseconds for double click
 |options.longClick]|boolean|false|enable watcher for long click

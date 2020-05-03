@@ -9,7 +9,7 @@
  * }
  *
  * const div = document.getElementById('clickme')
- * const c = clicked(div, handleClick, { thresshold: 15 })
+ * const c = clicked(div, handleClick, { threshold: 15 })
  *
  * // change callback
  * c.callback = () => console.log('different clicker')
@@ -37,7 +37,7 @@
 
 /** @type {object} */
 const defaultOptions = {
-    thresshold: 10,
+    threshold: 10,
     clicked: true,
     doubleClicked: false,
     doubleClickedTime: 300,
@@ -51,7 +51,7 @@ const defaultOptions = {
  * @param {HTMLElement|string} element or querySelector entry (e.g., #id-name or .class-name)
  * @param {ClickedCallback} callback called after a click, double click, or long click is registered
  * @param {object} [options]
- * @param {number} [options.thresshold=10] if touch moves threshhold-pixels then the touch-click is cancelled
+ * @param {number} [options.threshold=10] if touch moves threshhold-pixels then the touch-click is cancelled
  * @param {boolean} [options.clicked=true] disable watcher for default clicked event
  * @param {boolean} [options.doubleClicked] enable watcher for double click
  * @param {number} [options.doubleClickedTime=500] wait time in millseconds for double click
@@ -129,9 +129,9 @@ class Clicked
         }
     }
 
-    pastThreshhold(x, y)
+    pastThreshold(x, y)
     {
-        return Math.abs(this.lastX - x) > this.threshhold || Math.abs(this.lastY - y) > this.threshhold
+        return Math.abs(this.lastX - x) > this.threshold || Math.abs(this.lastY - y) > this.threshold
     }
 
     touchmove(e)
@@ -146,7 +146,7 @@ class Clicked
             {
                 const x = e.changedTouches[0].screenX;
                 const y = e.changedTouches[0].screenY;
-                if (this.pastThreshhold(x, y))
+                if (this.pastThreshold(x, y))
                 {
                     this.cancel();
                 }
@@ -201,7 +201,7 @@ class Clicked
     {
         if (this.doubleClickedTimeout)
         {
-            if (this.pastThreshhold(x, y))
+            if (this.pastThreshold(x, y))
             {
                 if (this.options.clicked)
                 {
@@ -261,7 +261,7 @@ class Clicked
         {
             const x = e.screenX;
             const y = e.screenY;
-            if (this.pastThreshhold(x, y))
+            if (this.pastThreshold(x, y))
             {
                 this.cancel();
             }
