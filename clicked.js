@@ -131,7 +131,7 @@ class Clicked
 
     pastThreshold(x, y)
     {
-        return Math.abs(this.lastX - x) > this.threshold || Math.abs(this.lastY - y) > this.threshold
+        return Math.abs(this.lastX - x) > this.options.threshold || Math.abs(this.lastY - y) > this.options.threshold
     }
 
     touchmove(e)
