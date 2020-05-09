@@ -1,6 +1,6 @@
 {
   "name": "clicked",
-  "version": "3.2.1",
+  "version": "3.2.2",
   "description": "Javascript handler for clicks, double-clicks, and/or long-clicks that works for both mouse and touch",
   "main": "dist/clicked.js",
   "module": "clicked.js",
