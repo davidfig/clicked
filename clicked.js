@@ -240,7 +240,7 @@ class Clicked
     doubleClicked(e)
     {
         this.doubleClickedTimeout = null
-        this.callback({ event: e, type: 'double-clicked' })
+        this.callback({ event: e, type: 'clicked' })
     }
 
     mousedown(e)

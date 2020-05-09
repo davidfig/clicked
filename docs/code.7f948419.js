@@ -299,7 +299,7 @@ function () {
   }, {
     key: "pastThreshold",
     value: function pastThreshold(x, y) {
-      return Math.abs(this.lastX - x) > this.threshold || Math.abs(this.lastY - y) > this.threshold;
+      return Math.abs(this.lastX - x) > this.options.threshold || Math.abs(this.lastY - y) > this.options.threshold;
     }
   }, {
     key: "touchmove",
@@ -422,7 +422,7 @@ function () {
       this.doubleClickedTimeout = null;
       this.callback({
         event: e,
-        type: 'double-clicked'
+        type: 'clicked'
       });
     }
   }, {
@@ -534,7 +534,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "45989" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "34909" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
