@@ -1,4 +1,39 @@
-"use strict";
+/**
+ * Watcher for click, double-click, or long-click event for both mouse and touch
+ * @example
+ * import { clicked } from 'clicked'
+ *
+ * function handleClick()
+ * {
+ *    console.log('I was clicked.')
+ * }
+ *
+ * const div = document.getElementById('clickme')
+ * const c = clicked(div, handleClick, { threshold: 15 })
+ *
+ * // change callback
+ * c.callback = () => console.log('different clicker')
+ *
+ * // destroy
+ * c.destroy()
+ *
+ * // using built-in querySelector
+ * clicked('#clickme', handleClick2)
+ *
+ * // watching for all types of clicks
+ * function handleAllClicks(e) {
+ *     switch (e.type)
+ *     {
+ *         case 'clicked': ...
+ *         case 'double-clicked': ...
+ *         case 'long-clicked': ...
+ *     }
+ *
+ *     // view UIEvent that caused callback
+ *     console.log(e.event)
+ * }
+ * clicked('#clickme', handleAllClicks, { doubleClicked: true, longClicked: true })
+ */
 var __assign = (this && this.__assign) || function () {
     __assign = Object.assign || function(t) {
         for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -10,13 +45,11 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
-exports.__esModule = true;
-exports.Clicked = exports.clicked = void 0;
 var defaultOptions = {
     threshold: 10,
     clicked: true,
     mouse: true,
-    touch: 1,
+    touch: true,
     doubleClicked: false,
     doubleClickedTime: 300,
     longClicked: false,
@@ -24,11 +57,25 @@ var defaultOptions = {
     capture: false,
     clickDown: false
 };
-function clicked(element, callback, options) {
+/**
+ * @param element element or querySelector entry (e.g., #id-name or .class-name)
+ * @param callback called after a click, double click, or long click is registered
+ * @param [options]
+ * @param [options.threshold=10] threshold of movement to cancel all events
+ * @param [options.clicked=true] dispatch event for clicked
+ * @param [options.mouse=true] whether to listen for mouse events; can also be used to set which mouse buttons are active
+ * @param [options.touch=true] whether to listen for touch events; can also be used to set the number of touch points to accept
+ * @param [options.doubleClicked] dispatch event for double click
+ * @param [options.doubleClickedTime=500] wait time in millseconds for double click
+ * @param [options.longClicked] dispatch event for long click
+ * @param [options.longClickedTime=500] wait time for long click
+ * @param [options.clickDown] dispatch event for click down
+ * @param [options.capture]  events will be dispatched to this registered listener before being dispatched to any EventTarget beneath it in the DOM tree
+ */
+export function clicked(element, callback, options) {
     return new Clicked(element, callback, options);
 }
-exports.clicked = clicked;
-var Clicked = (function () {
+var Clicked = /** @class */ (function () {
     function Clicked(element, callback, options) {
         if (typeof element === 'string') {
             element = document.querySelector(element);
@@ -61,6 +108,7 @@ var Clicked = (function () {
         this.element.addEventListener('touchcancel', this.events.touchcancel, { capture: this.options.capture });
         this.element.addEventListener('touchend', this.events.touchend, { capture: this.options.capture });
     };
+    /** removes event listeners added by Clicked */
     Clicked.prototype.destroy = function () {
         this.element.removeEventListener('mousedown', this.events.mousedown);
         this.element.removeEventListener('mouseup', this.events.mouseup);
@@ -71,14 +119,12 @@ var Clicked = (function () {
         this.element.removeEventListener('touchend', this.events.touchend);
     };
     Clicked.prototype.touchstart = function (e) {
-        if (this.options.touch) {
-            if (this.down === true) {
-                this.cancel();
-            }
-            else {
-                if (this.options.touch === true || e.touches.length <= this.options.touch) {
-                    this.handleDown(e, e.changedTouches[0].screenX, e.changedTouches[0].screenY);
-                }
+        if (this.down === true) {
+            this.cancel();
+        }
+        else {
+            if (e.touches.length === 1) {
+                this.handleDown(e, e.changedTouches[0].screenX, e.changedTouches[0].screenY);
             }
         }
     };
@@ -99,6 +145,7 @@ var Clicked = (function () {
             }
         }
     };
+    /** cancel current event */
     Clicked.prototype.cancel = function () {
         this.down = false;
         if (this.doubleClickedTimeout) {
@@ -175,13 +222,13 @@ var Clicked = (function () {
             return true;
         }
         else if (e.button === 0) {
-            return this.options.mouse.indexOf('left') !== -1;
+            return this.options.mouse.includes('left');
         }
         else if (e.button === 1) {
-            return this.options.mouse.indexOf('middle') !== -1;
+            return this.options.mouse.includes('middle');
         }
         else if (e.button === 2) {
-            return this.options.mouse.indexOf('right') !== -1;
+            return this.options.mouse.includes('right');
         }
     };
     Clicked.prototype.mousedown = function (e) {
@@ -214,5 +261,10 @@ var Clicked = (function () {
     };
     return Clicked;
 }());
-exports.Clicked = Clicked;
-//# sourceMappingURL=clicked.js.map
+export { Clicked };
+/**
+ * Callback for
+ * @callback Clicked~ClickedCallback
+ * @param {UIEvent} event
+ * @param {('clicked'|'double-clicked'|'long-clicked'|'click-down')} type
+ */ 

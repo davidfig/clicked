@@ -1,15 +1,21 @@
 {
   "name": "clicked",
-  "version": "3.2.3",
-  "description": "Javascript handler for clicks, double-clicks, and/or long-clicks that works for both mouse and touch",
+  "version": "4.0.0",
+  "description": "Configurable handler for clicks, double-clicks, and/or long-clicks that works with both mouse and touch",
   "main": "dist/clicked.js",
-  "module": "clicked.js",
+  "module": "dist/clicked.es.js",
+  "types": "dist/clicked.d.ts",
   "scripts": {
-    "test": "parcel test/index.html --out-dir docs",
-    "build-test": "parcel build test/index.html --out-dir docs",
-    "build": "rollup -c rollup.config.js",
-    "prepublishOnly": "yarn build"
+    "demo": "parcel demo/index.html --out-dir docs",
+    "build-demo": "rm docs/* && parcel build demo/index.html --out-dir docs",
+    "build-es6": "tsc code/clicked.ts --module es6 --sourcemap --target es2017 --declaration --removeComments --outDir dist && mv dist/clicked.js dist/clicked.es.js && mv dist/clicked.js.map dist/clicked.es.js.map",
+    "build-commonjs": "tsc code/clicked.ts --sourcemap --module commonjs --removeComments --outDir dist",
+    "build": "yarn build-es6 && yarn build-commonjs",
+    "prepublishOnly": "yarn build && yarn build-demo"
   },
+  "files": [
+    "dist"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/davidfig/clicked.git"
@@ -22,19 +28,19 @@
     "long click",
     "click"
   ],
-  "author": "David Figatner (YOPEY YOPEY LLC)",
+  "author": {
+    "name": "David Figatner (YOPEY YOPEY LLC)",
+    "email": "david@yopeyopey.com",
+    "url": "https://yopeyopey.com"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/davidfig/clicked/issues"
   },
   "homepage": "https://github.com/davidfig/clicked#readme",
   "devDependencies": {
-    "esm": "^3.2.25",
-    "jsdom": "^15.2.0",
     "parcel": "^1.12.4",
-    "rollup": "^1.26.2",
-    "rollup-plugin-terser": "^5.1.2",
-    "tape": "^4.11.0"
+    "typescript": "^3.9.3"
   },
   "dependencies": {}
 }

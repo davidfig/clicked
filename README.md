@@ -1,8 +1,12 @@
 # clicked
 Javascript handler for clicks, double-clicks, and/or long-clicks that works for both mouse and touch
 
-## changes in version 3
-Version 3 introduces long clicks and double clicks. See the example below. Note the changed usage since the library is now compiled with rollup.
+## changes in version 4
+* ported code to typescript
+* added options.mouse to select which mouse buttons are active (if any)
+* added options.touch to select whether touch is active and how many touch points are allowed
+* removed rollup and compiled using tsc
+* improved demo
 
 ## usage
 ```import { clicked } from 'clicked'```
@@ -58,12 +62,17 @@ creates Clicked object for element
 |---|---|---|---|
 |element|HTMLElement or string||element or querySelector entry (e.g., #id-name or .class-name)|
 |callback|ClickedCallback||callback called after clicked
-|options|object||optional options|
-|options.threshold|number|10|cancels click event when touch or mouse moves more than threshold
-|options.doubleClick|boolean|false|enable watcher for double click
-|options.doubleClickTime]|number|500|wait time in millseconds for double click
-|options.longClick]|boolean|false|enable watcher for long click
-|options.longClickTime]|boolean|500|wait time for long click
+|[options]|object||optional options|
+|[options].clicked|boolean|true|dispatch event for clicked
+|[options].threshold|number|10|threshold of movement to cancel all events
+|[options.mouse]|boolean or 'left' or 'right' 'middle' or 'left-right' or 'left-middle' or 'right-middle'|true|whether to listen for mouse events; can also be used to set which mouse buttons are active
+|[options.touch]|boolean or number|1|whether to listen for touch events; can also be used to set the number of touch points to accept
+|[options.doubleClick]|boolean|false|dispatch events for double click
+|[options.doubleClickTime]]|number|500|wait time in millseconds for double click
+|[options.longClick]]|boolean|false|enable watcher for long click
+|[options.longClickTime]]|boolean|500|wait time for long click
+|[options.clickDown]|boolean|dispatch event for click down (ie, after touchstart or mousedown callback will be called with type 'click-down')
+|[options.capture]|boolean|false|events will be dispatched to this registered listener before being dispatched to any EventTarget beneath it in the DOM tree
 
 ### Clicked
 returned by clicked(...)
@@ -75,17 +84,17 @@ removes event listeners on element
 
 |name|type|description
 |---|---|---|
-|event|UIEvent|last UIEvent that triggered callback|
-|type|'clicked' or 'double-clicked' or 'long-clicked'|type of click|
+|event|MouseEvent or TouchEvent|mouse or touch event that triggered callback|
+|type|'clicked' or 'double-clicked' or 'long-clicked' or 'click-down'|type of click|
 
 ### Clicked.cancel()
 cancel any outstanding events
 
-## tests
-```yarn test```
+## demo
+```yarn demo```
 
 Open browser to https://localhost:1234/
 
 ## license  
 MIT License  
-(c) 2019 [YOPEY YOPEY LLC](https://yopeyopey.com/) by [David Figatner](https://twitter.com/yopey_yopey/)
+(c) 2020 [YOPEY YOPEY LLC](https://yopeyopey.com/) by [David Figatner](mailto://david@yopeyopey.com)
