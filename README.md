@@ -1,5 +1,5 @@
 # clicked
-Javascript handler for clicks, double-clicks, and/or long-clicks that works for both mouse and touch
+Configurable vanilla handler for clicks, double-clicks, and/or long-clicks that works for both mouse and touch
 
 ## changes in version 4
 * ported code to typescript
@@ -16,7 +16,7 @@ or
 ```const clicked = require('clicked').clicked```
 
 ## demo
-[]
+https://davidfig.github.io/clicked/
 
 ## rationale
 
