@@ -1,7 +1,7 @@
 {
   "name": "clicked",
-  "version": "4.0.1",
-  "description": "Configurable handler for clicks, double-clicks, and/or long-clicks that works with both mouse and touch",
+  "version": "4.0.2",
+  "description": "Configurable vanilla handler for clicks, double-clicks, and/or long-clicks that works with both mouse and touch",
   "main": "dist/clicked.js",
   "module": "dist/clicked.es.js",
   "types": "dist/clicked.d.ts",
