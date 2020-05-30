@@ -70,11 +70,11 @@ window.onload = () =>
         el('.response-8').innerHTML = countTypes(e, element8Count)
     }, { mouse: false, doubleClicked: true, longClicked: true })
 
-    let element9Count = 0
-    clicked('.element-9', (e: IClickedCallback) =>
-    {
-        el('.response-9').innerHTML = `${e.type} (${++element9Count})`
-    }, { touch: false })
+    // let element9Count = 0
+    // clicked('.element-9', (e: IClickedCallback) =>
+    // {
+    //     el('.response-9').innerHTML = `${e.type} (${++element9Count})`
+    // }, { touch: false })
 
     // hide context menu during right click
     window.addEventListener('contextmenu', (e: MouseEvent) => e.preventDefault())

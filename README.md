@@ -15,6 +15,9 @@ or
 
 ```const clicked = require('clicked').clicked```
 
+## demo
+[]
+
 ## rationale
 
 I wanted to create a vanilla javascript way to handle mouse and touch clicks, double-clicks, and long-clicks.

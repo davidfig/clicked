@@ -7,7 +7,7 @@
   "types": "dist/clicked.d.ts",
   "scripts": {
     "demo": "parcel demo/index.html --out-dir docs",
-    "build-demo": "rm docs/* && parcel build demo/index.html --out-dir docs",
+    "build-demo": "rm docs/* && parcel build demo/index.html --out-dir docs --public-url ./clicked/",
     "build-es6": "tsc code/clicked.ts --module es6 --sourcemap --target es2017 --declaration --removeComments --outDir dist && mv dist/clicked.js dist/clicked.es.js && mv dist/clicked.js.map dist/clicked.es.js.map",
     "build-commonjs": "tsc code/clicked.ts --sourcemap --module commonjs --removeComments --outDir dist",
     "build": "yarn build-es6 && yarn build-commonjs",
