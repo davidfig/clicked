@@ -1,6 +1,6 @@
 {
   "name": "clicked",
-  "version": "4.0.2",
+  "version": "4.0.3",
   "description": "Configurable vanilla handler for clicks, double-clicks, and/or long-clicks that works with both mouse and touch",
   "main": "dist/clicked.js",
   "module": "dist/clicked.es.js",
@@ -14,7 +14,8 @@
     "prepublishOnly": "yarn build && yarn build-demo"
   },
   "files": [
-    "dist"
+    "dist",
+    "code"
   ],
   "repository": {
     "type": "git",
