@@ -105,7 +105,7 @@ export class Clicked {
             this.doubleClickedTimeout = this.setTimeout(() => this.doubleClickedCancel(e), this.options.doubleClickedTime);
         }
         else if (this.options.clicked) {
-            this.callback({ event: e, type: 'clicked' });
+            this.callback({ event: e, type: 'clicked', x: this.lastX, y: this.lastY });
         }
         if (this.longClickedTimeout) {
             clearTimeout(this.longClickedTimeout);
@@ -117,12 +117,12 @@ export class Clicked {
         if (this.doubleClickedTimeout) {
             if (this.pastThreshold(x, y)) {
                 if (this.options.clicked) {
-                    this.callback({ event: e, type: 'clicked' });
+                    this.callback({ event: e, type: 'clicked', x, y });
                 }
                 this.cancel();
             }
             else {
-                this.callback({ event: e, type: 'double-clicked' });
+                this.callback({ event: e, type: 'double-clicked', x, y });
                 this.cancel();
             }
         }
@@ -134,19 +134,19 @@ export class Clicked {
                 this.longClickedTimeout = this.setTimeout(() => this.longClicked(e), this.options.longClickedTime);
             }
             if (this.options.clickDown) {
-                this.callback({ event: e, type: 'click-down' });
+                this.callback({ event: e, type: 'click-down', x, y });
             }
         }
     }
     longClicked(e) {
         this.longClickedTimeout = null;
         this.down = false;
-        this.callback({ event: e, type: 'long-clicked' });
+        this.callback({ event: e, type: 'long-clicked', x: this.lastX, y: this.lastY });
     }
     doubleClickedCancel(e) {
         this.doubleClickedTimeout = null;
         if (this.options.clicked) {
-            this.callback({ event: e, type: 'clicked' });
+            this.callback({ event: e, type: 'clicked', x: this.lastX, y: this.lastY });
         }
     }
     checkMouseButtons(e) {

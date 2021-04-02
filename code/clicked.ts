@@ -55,6 +55,8 @@ export interface IClickedCallback
 {
     type: 'clicked' | 'double-clicked' | 'long-clicked' | 'click-down'
     event: MouseEvent | TouchEvent
+    x: number
+    y: number
 }
 
 const defaultOptions: IClickedOptions = {
@@ -240,7 +242,7 @@ export class Clicked
         }
         else if (this.options.clicked)
         {
-            this.callback({ event: e, type: 'clicked' })
+            this.callback({ event: e, type: 'clicked', x: this.lastX, y: this.lastY })
         }
         if (this.longClickedTimeout)
         {
@@ -258,13 +260,13 @@ export class Clicked
             {
                 if (this.options.clicked)
                 {
-                    this.callback({ event: e, type: 'clicked' })
+                    this.callback({ event: e, type: 'clicked', x, y })
                 }
                 this.cancel()
             }
             else
             {
-                this.callback({ event: e, type: 'double-clicked' })
+                this.callback({ event: e, type: 'double-clicked', x, y })
                 this.cancel()
             }
         }
@@ -279,7 +281,7 @@ export class Clicked
             }
             if (this.options.clickDown)
             {
-                this.callback({ event: e, type: 'click-down' })
+                this.callback({ event: e, type: 'click-down', x, y })
             }
         }
     }
@@ -288,7 +290,7 @@ export class Clicked
     {
         this.longClickedTimeout = null
         this.down = false
-        this.callback({ event: e, type: 'long-clicked' })
+        this.callback({ event: e, type: 'long-clicked', x: this.lastX, y: this.lastY })
     }
 
     protected doubleClickedCancel(e: UIEvent)
@@ -296,7 +298,7 @@ export class Clicked
         this.doubleClickedTimeout = null
         if (this.options.clicked)
         {
-            this.callback({ event: e, type: 'clicked' })
+            this.callback({ event: e, type: 'clicked', x: this.lastX, y: this.lastY })
         }
     }
 

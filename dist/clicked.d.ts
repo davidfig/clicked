@@ -14,6 +14,8 @@ export declare type MouseButtons = 'left' | 'right' | 'middle' | 'left-or-middle
 export interface IClickedCallback {
     type: 'clicked' | 'double-clicked' | 'long-clicked' | 'click-down';
     event: MouseEvent | TouchEvent;
+    x: number;
+    y: number;
 }
 declare type SetTimeoutHandle = number;
 interface IListeners {

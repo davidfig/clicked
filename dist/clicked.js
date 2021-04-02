@@ -122,7 +122,7 @@ var Clicked = (function () {
             this.doubleClickedTimeout = this.setTimeout(function () { return _this.doubleClickedCancel(e); }, this.options.doubleClickedTime);
         }
         else if (this.options.clicked) {
-            this.callback({ event: e, type: 'clicked' });
+            this.callback({ event: e, type: 'clicked', x: this.lastX, y: this.lastY });
         }
         if (this.longClickedTimeout) {
             clearTimeout(this.longClickedTimeout);
@@ -135,12 +135,12 @@ var Clicked = (function () {
         if (this.doubleClickedTimeout) {
             if (this.pastThreshold(x, y)) {
                 if (this.options.clicked) {
-                    this.callback({ event: e, type: 'clicked' });
+                    this.callback({ event: e, type: 'clicked', x: x, y: y });
                 }
                 this.cancel();
             }
             else {
-                this.callback({ event: e, type: 'double-clicked' });
+                this.callback({ event: e, type: 'double-clicked', x: x, y: y });
                 this.cancel();
             }
         }
@@ -152,19 +152,19 @@ var Clicked = (function () {
                 this.longClickedTimeout = this.setTimeout(function () { return _this.longClicked(e); }, this.options.longClickedTime);
             }
             if (this.options.clickDown) {
-                this.callback({ event: e, type: 'click-down' });
+                this.callback({ event: e, type: 'click-down', x: x, y: y });
             }
         }
     };
     Clicked.prototype.longClicked = function (e) {
         this.longClickedTimeout = null;
         this.down = false;
-        this.callback({ event: e, type: 'long-clicked' });
+        this.callback({ event: e, type: 'long-clicked', x: this.lastX, y: this.lastY });
     };
     Clicked.prototype.doubleClickedCancel = function (e) {
         this.doubleClickedTimeout = null;
         if (this.options.clicked) {
-            this.callback({ event: e, type: 'clicked' });
+            this.callback({ event: e, type: 'clicked', x: this.lastX, y: this.lastY });
         }
     };
     Clicked.prototype.checkMouseButtons = function (e) {
