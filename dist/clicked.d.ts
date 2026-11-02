@@ -10,12 +10,12 @@ export interface IClickedOptions {
     clickDown?: boolean;
     capture?: boolean;
 }
-export declare type MouseButtons = 'left' | 'right' | 'middle' | 'left-or-middle' | 'right-or-middle' | 'left-or-right';
+export type MouseButtons = 'left' | 'right' | 'middle' | 'left-or-middle' | 'right-or-middle' | 'left-or-right';
 export interface IClickedCallback {
     type: 'clicked' | 'double-clicked' | 'long-clicked' | 'click-down';
     event: MouseEvent | TouchEvent;
 }
-declare type SetTimeoutHandle = number;
+type SetTimeoutHandle = number;
 interface IListeners {
     mousedown: EventListenerOrEventListenerObject;
     mouseup: EventListenerOrEventListenerObject;
