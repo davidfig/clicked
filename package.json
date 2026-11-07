@@ -6,10 +6,10 @@
   "module": "dist/clicked.es.js",
   "types": "dist/clicked.d.ts",
   "scripts": {
-    "demo": "parcel demo/index.html --out-dir docs",
-    "build-demo": "rm docs/* && parcel build demo/index.html --out-dir docs --public-url /clicked/",
-    "build-es6": "tsc code/clicked.ts --module es6 --sourcemap --target es2017 --declaration --removeComments --outDir dist && mv dist/clicked.js dist/clicked.es.js && mv dist/clicked.js.map dist/clicked.es.js.map",
-    "build-commonjs": "tsc code/clicked.ts --sourcemap --module commonjs --removeComments --outDir dist",
+    "demo": "vite demo",
+    "build-demo": "vite build demo --outDir ../docs --emptyOutDir --base /clicked/",
+    "build-es6": "tsc code/clicked.ts --strict false --module es6 --sourcemap --target es2017 --declaration --removeComments --outDir dist && mv dist/clicked.js dist/clicked.es.js && mv dist/clicked.js.map dist/clicked.es.js.map",
+    "build-commonjs": "tsc code/clicked.ts --strict false --sourcemap --module commonjs --target es2017 --removeComments --outDir dist",
     "build": "yarn build-es6 && yarn build-commonjs",
     "prepublishOnly": "yarn build && yarn build-demo"
   },
@@ -40,8 +40,8 @@
   },
   "homepage": "https://github.com/davidfig/clicked#readme",
   "devDependencies": {
-    "parcel": "^1.12.4",
-    "typescript": "^3.9.3"
+    "typescript": "^7.0.2",
+    "vite": "^8.3.5"
   },
   "dependencies": {}
 }

@@ -1,18 +1,8 @@
 "use strict";
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
-exports.__esModule = true;
-exports.Clicked = exports.clicked = void 0;
-var defaultOptions = {
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Clicked = void 0;
+exports.clicked = clicked;
+const defaultOptions = {
     threshold: 10,
     clicked: true,
     mouse: true,
@@ -27,31 +17,29 @@ var defaultOptions = {
 function clicked(element, callback, options) {
     return new Clicked(element, callback, options);
 }
-exports.clicked = clicked;
-var Clicked = (function () {
-    function Clicked(element, callback, options) {
+class Clicked {
+    constructor(element, callback, options) {
         if (typeof element === 'string') {
             element = document.querySelector(element);
             if (!element) {
-                console.warn("Unknown element: document.querySelector(" + element + ") in clicked()");
+                console.warn(`Unknown element: document.querySelector(${element}) in clicked()`);
                 return;
             }
         }
         this.element = element;
         this.callback = callback;
-        this.options = __assign(__assign({}, defaultOptions), options);
+        this.options = Object.assign(Object.assign({}, defaultOptions), options);
         this.createListeners();
     }
-    Clicked.prototype.createListeners = function () {
-        var _this = this;
+    createListeners() {
         this.events = {
-            mousedown: function (e) { return _this.mousedown(e); },
-            mouseup: function (e) { return _this.mouseup(e); },
-            mousemove: function (e) { return _this.mousemove(e); },
-            touchstart: function (e) { return _this.touchstart(e); },
-            touchmove: function (e) { return _this.touchmove(e); },
-            touchcancel: function () { return _this.cancel(); },
-            touchend: function (e) { return _this.touchend(e); }
+            mousedown: (e) => this.mousedown(e),
+            mouseup: (e) => this.mouseup(e),
+            mousemove: (e) => this.mousemove(e),
+            touchstart: (e) => this.touchstart(e),
+            touchmove: (e) => this.touchmove(e),
+            touchcancel: () => this.cancel(),
+            touchend: (e) => this.touchend(e)
         };
         this.element.addEventListener('mousedown', this.events.mousedown, { capture: this.options.capture });
         this.element.addEventListener('mouseup', this.events.mouseup, { capture: this.options.capture });
@@ -60,8 +48,8 @@ var Clicked = (function () {
         this.element.addEventListener('touchmove', this.events.touchmove, { passive: true, capture: this.options.capture });
         this.element.addEventListener('touchcancel', this.events.touchcancel, { capture: this.options.capture });
         this.element.addEventListener('touchend', this.events.touchend, { capture: this.options.capture });
-    };
-    Clicked.prototype.destroy = function () {
+    }
+    destroy() {
         this.element.removeEventListener('mousedown', this.events.mousedown);
         this.element.removeEventListener('mouseup', this.events.mouseup);
         this.element.removeEventListener('mousemove', this.events.mousemove);
@@ -69,8 +57,8 @@ var Clicked = (function () {
         this.element.removeEventListener('touchmove', this.events.touchmove);
         this.element.removeEventListener('touchcancel', this.events.touchcancel);
         this.element.removeEventListener('touchend', this.events.touchend);
-    };
-    Clicked.prototype.touchstart = function (e) {
+    }
+    touchstart(e) {
         if (this.options.touch) {
             if (this.down === true) {
                 this.cancel();
@@ -81,25 +69,25 @@ var Clicked = (function () {
                 }
             }
         }
-    };
-    Clicked.prototype.pastThreshold = function (x, y) {
+    }
+    pastThreshold(x, y) {
         return Math.abs(this.lastX - x) > this.options.threshold || Math.abs(this.lastY - y) > this.options.threshold;
-    };
-    Clicked.prototype.touchmove = function (e) {
+    }
+    touchmove(e) {
         if (this.down) {
             if (e.touches.length !== 1) {
                 this.cancel();
             }
             else {
-                var x = e.changedTouches[0].screenX;
-                var y = e.changedTouches[0].screenY;
+                const x = e.changedTouches[0].screenX;
+                const y = e.changedTouches[0].screenY;
                 if (this.pastThreshold(x, y)) {
                     this.cancel();
                 }
             }
         }
-    };
-    Clicked.prototype.cancel = function () {
+    }
+    cancel() {
         this.down = false;
         if (this.doubleClickedTimeout) {
             clearTimeout(this.doubleClickedTimeout);
@@ -109,17 +97,16 @@ var Clicked = (function () {
             clearTimeout(this.longClickedTimeout);
             this.longClickedTimeout = null;
         }
-    };
-    Clicked.prototype.touchend = function (e) {
+    }
+    touchend(e) {
         if (this.down) {
             e.preventDefault();
             this.handleClicks(e);
         }
-    };
-    Clicked.prototype.handleClicks = function (e) {
-        var _this = this;
+    }
+    handleClicks(e) {
         if (this.options.doubleClicked) {
-            this.doubleClickedTimeout = this.setTimeout(function () { return _this.doubleClickedCancel(e); }, this.options.doubleClickedTime);
+            this.doubleClickedTimeout = this.setTimeout(() => this.doubleClickedCancel(e), this.options.doubleClickedTime);
         }
         else if (this.options.clicked) {
             this.callback({ event: e, type: 'clicked' });
@@ -129,9 +116,8 @@ var Clicked = (function () {
             this.longClickedTimeout = null;
         }
         this.down = false;
-    };
-    Clicked.prototype.handleDown = function (e, x, y) {
-        var _this = this;
+    }
+    handleDown(e, x, y) {
         if (this.doubleClickedTimeout) {
             if (this.pastThreshold(x, y)) {
                 if (this.options.clicked) {
@@ -149,25 +135,25 @@ var Clicked = (function () {
             this.lastY = y;
             this.down = true;
             if (this.options.longClicked) {
-                this.longClickedTimeout = this.setTimeout(function () { return _this.longClicked(e); }, this.options.longClickedTime);
+                this.longClickedTimeout = this.setTimeout(() => this.longClicked(e), this.options.longClickedTime);
             }
             if (this.options.clickDown) {
                 this.callback({ event: e, type: 'click-down' });
             }
         }
-    };
-    Clicked.prototype.longClicked = function (e) {
+    }
+    longClicked(e) {
         this.longClickedTimeout = null;
         this.down = false;
         this.callback({ event: e, type: 'long-clicked' });
-    };
-    Clicked.prototype.doubleClickedCancel = function (e) {
+    }
+    doubleClickedCancel(e) {
         this.doubleClickedTimeout = null;
         if (this.options.clicked) {
             this.callback({ event: e, type: 'clicked' });
         }
-    };
-    Clicked.prototype.checkMouseButtons = function (e) {
+    }
+    checkMouseButtons(e) {
         if (this.options.mouse === false) {
             return false;
         }
@@ -183,8 +169,8 @@ var Clicked = (function () {
         else if (e.button === 2) {
             return this.options.mouse.indexOf('right') !== -1;
         }
-    };
-    Clicked.prototype.mousedown = function (e) {
+    }
+    mousedown(e) {
         if (this.checkMouseButtons(e)) {
             if (this.down === true) {
                 this.down = false;
@@ -193,26 +179,25 @@ var Clicked = (function () {
                 this.handleDown(e, e.screenX, e.screenY);
             }
         }
-    };
-    Clicked.prototype.mousemove = function (e) {
+    }
+    mousemove(e) {
         if (this.down) {
-            var x = e.screenX;
-            var y = e.screenY;
+            const x = e.screenX;
+            const y = e.screenY;
             if (this.pastThreshold(x, y)) {
                 this.cancel();
             }
         }
-    };
-    Clicked.prototype.mouseup = function (e) {
+    }
+    mouseup(e) {
         if (this.down) {
             e.preventDefault();
             this.handleClicks(e);
         }
-    };
-    Clicked.prototype.setTimeout = function (callback, time) {
+    }
+    setTimeout(callback, time) {
         return setTimeout(callback, time);
-    };
-    return Clicked;
-}());
+    }
+}
 exports.Clicked = Clicked;
 //# sourceMappingURL=clicked.js.map
